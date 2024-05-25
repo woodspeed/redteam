@@ -1,7 +1,7 @@
 $resourceGroupName = "cvtrsg" # <- Replace with your value
 $location = "westeurope" # <- This must be a location that can host Azure Container Instances
 $storageAccountName = "deploymentscript474694" # <- Unique storage account name
-$userManagedIdentity = "scriptRunner" # <- Change this if you want
+$userManagedIdentity = "mi_wucpi" # <- Change this if you want
 
 Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccountName || New-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccountName -Location $location -SkuName Standard_LRS
 Set-AzStorageAccount -Name $storageAccountName -ResourceGroupName $resourceGroupName -EnableHttpsTrafficOnly $true
