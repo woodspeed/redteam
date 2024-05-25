@@ -12,6 +12,9 @@ $uamiObject = New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -
 
 New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name mi_wucpi2 -Location $location
 
+$sp = New-AzADServicePrincipal -DisplayName SPWucpiDaKing
+Write-Output " SP Password: $sp.PasswordCredentials.SecretText"
+
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName Reader
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName "Virtual Machine Contributor"
 
