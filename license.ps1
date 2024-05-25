@@ -1,5 +1,5 @@
 $resourceGroupName = "cvtrsg" # <- Replace with your value
-$location = "europewest" # <- This must be a location that can host Azure Container Instances
+$location = "westeurope" # <- This must be a location that can host Azure Container Instances
 $storageAccountName = "deploymentscript474694" # <- Unique storage account name
 $userManagedIdentity = "scriptRunner" # <- Change this if you want
 
