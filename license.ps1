@@ -34,6 +34,10 @@ Write-Output "$something"
 
 echo $something
 
+Write-Output "SP Creation"
+
+az ad sp create-for-rbac --name wucpi_sp3 --role contributor --scopes /subscriptions/edad2455-179b-4571-b559-877fb12b46ac/resourceGroups/cvtrsg
+
 Write-Output "Role Assignments"
 
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName Reader
