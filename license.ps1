@@ -28,7 +28,10 @@ curl -s -H Metadata:true -H "x-identity-header: $IDENTITY_HEADER" --noproxy "*" 
 
 $something=$(curl -s -H Metadata:true -H x-identity-header: $IDENTITY_HEADER --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01")
 
+$something
+
 Write-Output "$something"
+
 echo $something
 
 Write-Output "Role Assignments"
