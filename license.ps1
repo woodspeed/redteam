@@ -16,14 +16,20 @@ Write-Output "Env variables1 --- $((gci env:*).GetEnumerator() | Sort-Object Nam
 
 Write-Output "Env variables2 --- $((Get-AzAccessToken -ResourceUrl "https://graph.microsoft.com").Token)"
 
+Write-Output "Curl commands"
+
 #curl -s -k -H Metadata:true --noproxy "*" "http://169.254.131.2:8081/msi/token?resource=https://management.azure.com"
 
-curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://management.azure.com/&object_id=febc5f61-f7d0-4897-b47b-763e843ddc37&client_id=a4d8d5a8-f5f2-4e78-91d6-9cdf1e94365b"
+#curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://management.azure.com/&object_id=febc5f61-f7d0-4897-b47b-763e843ddc37&client_id=a4d8d5a8-f5f2-4e78-91d6-9cdf1e94365b"
 
 curl -s -H Metadata:true --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01"
 
+Write-Output "Role Assignments"
+
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName Reader
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName "Virtual Machine Contributor"
+
+Write-Output "Outputs"
 
 Write-Output "ACIResourceGroup --- $resourceGroupName"
 Write-Output "StorageAccountId --- $((Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccountName).Id)"
