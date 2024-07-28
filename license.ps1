@@ -12,11 +12,13 @@ $uamiObject = New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -
 
 New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name mi_wucpi2 -Location $location
 
-Write-Output "Env variables1 --- $((gci env:*).GetEnumerator() | Sort-Object Name | Out-String)"
+$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
 
-Write-Output "Env variables2 --- $((Get-AzAccessToken -ResourceUrl "https://graph.microsoft.com").Token)"
+#Write-Output "Env variables1 --- $((gci env:*).GetEnumerator() | Sort-Object Name | Out-String)"
 
-Write-Output "Env variables2 --- $((Get-AzAccessToken -ResourceUrl "https://graph.microsoft.com"))"
+#Write-Output "Env variables2 --- $((Get-AzAccessToken -ResourceUrl "https://graph.microsoft.com").Token)"
+
+#Write-Output "Env variables2 --- $((Get-AzAccessToken -ResourceUrl "https://graph.microsoft.com"))"
 
 Write-Output "Curl commands"
 
