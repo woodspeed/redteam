@@ -12,7 +12,7 @@ $uamiObject = New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -
 
 New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name mi_wucpi2 -Location $location
 
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 #Write-Output "Env variables1 --- $((gci env:*).GetEnumerator() | Sort-Object Name | Out-String)"
 
