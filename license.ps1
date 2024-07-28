@@ -12,7 +12,7 @@ $uamiObject = New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -
 
 New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name mi_wucpi2 -Location $location
 
-$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 #Write-Output "Env variables1 --- $((gci env:*).GetEnumerator() | Sort-Object Name | Out-String)"
 
@@ -26,7 +26,7 @@ Write-Output "Curl commands"
 
 #curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://management.azure.com/&object_id=febc5f61-f7d0-4897-b47b-763e843ddc37&client_id=a4d8d5a8-f5f2-4e78-91d6-9cdf1e94365b"
 
-curl -s -H Metadata:true -H "x-identity-header: $IDENTITY_HEADER" --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01"
+#curl -s -H Metadata:true -H "x-identity-header: $IDENTITY_HEADER" --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01"
 
 $something=$(curl -s -H Metadata:true -H x-identity-header: $IDENTITY_HEADER --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01")
 
