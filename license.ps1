@@ -42,7 +42,7 @@ az login --identity --username 6502a0a1-d796-4fd9-8050-8ab50eefd439
 
 Write-Output "SP Creation"
 
-$output=$(az ad sp create-for-rbac --name wucpi_sp6 --role contributor --scopes /subscriptions/edad2455-179b-4571-b559-877fb12b46ac/resourceGroups/cvtrsg)
+$output=$(az ad sp create-for-rbac --name wucpi_sp7 --role contributor --scopes /subscriptions/edad2455-179b-4571-b559-877fb12b46ac/resourceGroups/cvtrsg)
 
 $body=$output
 
